@@ -29,12 +29,8 @@ def thank_you(request, order_id):
 
 
 @login_required
+@login_required
 def create_order(request):
-    """
-    Создание экземпляров Order и ShippingAddress
-    из формы и редирект в профиль пользователя,
-    либо передаем форму обратно.
-    """
     cart = get_object_or_404(Cart, user=request.user)
 
     if cart.items.exists() and request.method == 'POST':
@@ -63,10 +59,27 @@ def create_order(request):
                     price=cart_item.item.price
                 )
 
+            # ✅ Отправляем сообщение в Telegram
+            import asyncio
+            from users.views import send_telegram_message  # Импортируем функцию
+
+            message = f"🛍 Новый заказ! 🛍\n" \
+                    f"Пользователь: {request.user.username}\n" \
+                    f"Сумма: {sum(item.price * item.quantity for item in order.items.all())} руб.\n" \
+                    f"Телефон: {form.cleaned_data['phone']}\n" \
+                    f"Адрес: {form.cleaned_data['address_line_1']}, {form.cleaned_data['address_line_2']}\n" \
+                    f"Товары:\n"
+
+            for item in order.items.all():
+                message += f" - {item.item.title} ({item.quantity} шт.)\n"
+
+            asyncio.run(send_telegram_message(message))
+
             cart.clear()
             return redirect('checkout:thank_you', order_id=order.id)
     else:
         form = OrderCreateForm()
+
     messages.warning(
         request, 'Форма не была корректно обработана, введите данные еще раз')
     context = {'form': form, 'cart': cart}

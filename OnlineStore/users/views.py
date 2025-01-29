@@ -42,28 +42,26 @@ async def send_telegram_message(message):
     """
     Асинхронная функция для отправки сообщения в ТГ.
     """
-    bot = telegram.Bot(token=TELEGRAM_TOKEN)
-    chat_id = TELEGRAM_CHAT_ID
-    await bot.send_message(chat_id=chat_id, text=message)
+    try:
+        bot = telegram.Bot(token=TELEGRAM_TOKEN)
+        chat_id = TELEGRAM_CHAT_ID
+        await bot.send_message(chat_id=chat_id, text=message)
+        print(f"✅ Сообщение успешно отправлено: {message}")
+    except Exception as e:
+        print(f"❌ Ошибка при отправке в Telegram: {e}")
+
+
 
 
 def feedback_processing(request):
-    """
-    Представление приема и обработки для обратной связи.
-    """
+    print("🔍 feedback_processing вызван!")  # Отладка
+
     if request.method == 'POST':
+        print("🔍 Это POST-запрос!")  # Отладка
+
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            feedback = Feedback(
-                feedback_name=form.cleaned_data['feedback_name'],
-                feedback_email=form.cleaned_data['feedback_email'],
-                feedback_message=form.cleaned_data['feedback_message'],
-            )
-            feedback.save()
+            print("✅ Форма валидна!")  # Отладка
 
-            # Отпрака сообщения
-            message = f"Новое сообщение от {feedback.feedback_name} ({feedback.feedback_email}): {feedback.feedback_message}"
-            asyncio.run(send_telegram_message(message))
 
-            return render(request, 'users/feedback_success.html')
-    return render(request, 'users/feedback_failed.html')
+
