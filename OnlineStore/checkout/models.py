@@ -8,7 +8,6 @@ class Order(models.Model):
     PAYMENT_METHOD_CHOICES = [
         ('cash_courier', 'Наличными курьеру'),
         ('card_courier', 'Картой курьеру'),
-        ('card_online', 'Картой онлайн'),
     ]
     STATUS_CHOICES = [
         ('created', 'Создан'),
