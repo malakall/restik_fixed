@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
-
 from cart.views import Cart
 from .forms import OrderCreateForm
 from .models import Order, OrderItem, ShippingAddress
@@ -28,7 +27,7 @@ def thank_you(request, order_id):
     return render(request, 'checkout/thank_you.html', {'order': order})
 
 
-@login_required
+
 @login_required
 def create_order(request):
     cart = get_object_or_404(Cart, user=request.user)

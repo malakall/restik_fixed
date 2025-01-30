@@ -16,4 +16,4 @@ class CreationForm(UserCreationForm):
 class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
-        fields = ['feedback_name', 'feedback_email', 'feedback_message']
+        fields = ['feedback_name', 'feedback_phone', 'feedback_message']  # Заменили 'feedback_email' на 'feedback_phone

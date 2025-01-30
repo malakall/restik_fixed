@@ -50,9 +50,6 @@ async def send_telegram_message(message):
     except Exception as e:
         print(f"❌ Ошибка при отправке в Telegram: {e}")
 
-
-
-
 def feedback_processing(request):
     """
     Представление приема и обработки для обратной связи.
@@ -62,13 +59,13 @@ def feedback_processing(request):
         if form.is_valid():
             feedback = Feedback(
                 feedback_name=form.cleaned_data['feedback_name'],
-                feedback_email=form.cleaned_data['feedback_email'],
+                feedback_phone=form.cleaned_data['feedback_phone'],  # Заменили 'feedback_email' на 'feedback_phone'
                 feedback_message=form.cleaned_data['feedback_message'],
             )
             feedback.save()
 
             # Отпрака сообщения
-            message = f"Новое сообщение от {feedback.feedback_name} ({feedback.feedback_email}): {feedback.feedback_message}"
+            message = f"Новое сообщение от {feedback.feedback_name} ({feedback.feedback_phone}): {feedback.feedback_message}"  # Заменили email на phone
             asyncio.run(send_telegram_message(message))
 
             return render(request, 'users/feedback_success.html')

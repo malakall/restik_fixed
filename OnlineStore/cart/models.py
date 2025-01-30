@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-
 from store.models import Item
-
 
 class Cart(models.Model):
     user = models.ForeignKey(

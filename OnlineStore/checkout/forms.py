@@ -1,4 +1,5 @@
 from django import forms
+from django.core.validators import RegexValidator
 
 from .models import Order
 
@@ -14,7 +15,14 @@ class OrderCreateForm(PlaceholderForm):
     first_name = forms.CharField(max_length=100, help_text='Имя')
     last_name = forms.CharField(max_length=100, help_text='Фамилия')
     email = forms.EmailField(help_text='Email')
-    phone = forms.CharField(max_length=20, help_text='Телефон')
+    
+    # Добавим регулярное выражение для валидации телефона
+    phone = forms.CharField(
+        max_length=20, 
+        help_text='Телефон', 
+        validators=[RegexValidator(regex=r'^[\+\d\s]+$', message='Телефон должен содержать только цифры, пробелы и символ "+"')]
+    )
+    
     address_line_1 = forms.CharField(max_length=100, help_text='Адрес')
     address_line_2 = forms.CharField(
         max_length=100,
