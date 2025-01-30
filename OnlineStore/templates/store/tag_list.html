@@ -4,15 +4,37 @@
 {% load static %}
     <h2>Список всех категорий</h2>
     <hr>
-{% for tag in page_obj %}
-    <a href="{% url 'store:tag_details' tag.slug %}"><b>{{ tag.name }}</b></a>
-    <p><span class="image right">
-        {% if tag.image %}
-            <img src="{{ tag.image.url }}" alt="" style="width: 200px; height: 200px;"/>
-        {% else %}
-            <img src="{% static "images/pic14.jpg" %}" alt="" />
-        {% endif %}
-    </span>{{tag.description}}{{tag.description}}</p>
-    {% if not forloop.last %}<hr>{% endif %}
-{% endfor %}
-{% endblock %} 
+    <style>
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .category-item img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-left: 20px; /* Отступ от текста */
+        }
+
+        .category-description {
+            flex: 1; /* Занимает оставшееся пространство */
+        }
+    </style>
+    {% for tag in page_obj %}
+        <div class="category-item">
+            <div class="category-description">
+                <a href="{% url 'store:tag_details' tag.slug %}"><b>{{ tag.name }}</b></a>
+                <p>{{ tag.description }}{{ tag.description }}</p>
+            </div>
+            {% if tag.image %}
+                <img src="{{ tag.image.url }}" alt="{{ tag.name }}" />
+            {% else %}
+                <img src="{% static 'images/pic14.jpg' %}" alt="Placeholder" />
+            {% endif %}
+        </div>
+        {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+{% endblock %}

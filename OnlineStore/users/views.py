@@ -54,14 +54,22 @@ async def send_telegram_message(message):
 
 
 def feedback_processing(request):
-    print("🔍 feedback_processing вызван!")  # Отладка
-
+    """
+    Представление приема и обработки для обратной связи.
+    """
     if request.method == 'POST':
-        print("🔍 Это POST-запрос!")  # Отладка
-
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            print("✅ Форма валидна!")  # Отладка
+            feedback = Feedback(
+                feedback_name=form.cleaned_data['feedback_name'],
+                feedback_email=form.cleaned_data['feedback_email'],
+                feedback_message=form.cleaned_data['feedback_message'],
+            )
+            feedback.save()
 
+            # Отпрака сообщения
+            message = f"Новое сообщение от {feedback.feedback_name} ({feedback.feedback_email}): {feedback.feedback_message}"
+            asyncio.run(send_telegram_message(message))
 
-
+            return render(request, 'users/feedback_success.html')
+    return render(request, 'users/feedback_failed.html')
