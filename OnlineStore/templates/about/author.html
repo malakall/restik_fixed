@@ -1,8 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>Привет! вы попали а луший ресторан в мире </p>
-<p>Только у на вы найдете самую вайбовую атмосферу и смоежете курто првоести время</p>
-<p>хз мб история о ресторане или блин шо писать</p>
-<p>и чтоб оставляли чай!</p>
-{% endblock %} 
+<p>Привет! Вы попали в лучший ресторан в мире</p>
+<p>Мы находимся по адресу: ул. Пригородная, стр. 133</p>
+
+<style>
+    .map-container {
+        width: 100%;
+        max-width: 560px; /* Максимальная ширина карты */
+        margin: 20px auto;
+    }
+
+    .map-container iframe {
+        width: 100%;
+        height: 300px; /* Высота карты */
+        border: none;
+    }
+
+    @media (max-width: 600px) {
+        .map-container iframe {
+            height: 200px; /* Уменьшаем высоту на мобильных устройствах */
+        }
+    }
+</style>
+
+<div class="map-container">
+    <iframe 
+        src="https://yandex.ru/map-widget/v1/?ll=37.990233%2C55.726067&mode=poi&poi%5Bpoint%5D=37.990155%2C55.726064&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D75644664747&z=19.84" 
+        allowfullscreen="true">
+    </iframe>
+</div>
+
+{% endblock %}  

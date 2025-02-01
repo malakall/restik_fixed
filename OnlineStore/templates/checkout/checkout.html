@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<h1>Оформление заказа</h1>
+<h1 style="text-align: center;">Оформление заказа</h1>
 {% if messages %}
 <div class="messages-container">
   <ul class="messages">
@@ -16,74 +16,83 @@
   </ul>
 </div>
 {% endif %}
+
 <form method="post" action="{% url 'checkout:create_order'%}">
   {% csrf_token %}
   <section>
-  <div class="row">
-    <div class="col-md-8" style="width: 60%; padding-right: 20px;">
-      <div><h2>Доставка</h2></div>
-      {% for field in form %}
-        {% if field.name != 'payment_method' %}
-          <div class="form-group">
-            {{ field }}
-            <div class="text-danger error-message">
-              {% for error in field.errors %}
-                <span>{{ error }}</span>
-              {% endfor %}
+    <div class="row" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+      
+      <!-- Доставка -->
+      <div class="col-md-8" style="width: 100%; max-width: 600px;">
+        <h2>Доставка</h2>
+        {% for field in form %}
+          {% if field.name != 'payment_method' %}
+            <div class="form-group">
+              {{ field }}
+              <div class="text-danger error-message">
+                {% for error in field.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
             </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Ваш заказ -->
+      <div class="col-md-8" style="width: 100%; max-width: 600px;">
+        <h2>Ваш заказ</h2>
+        {% if cart.items.exists %}
+          <div class="table-wrapper">
+            <table class="alt">
+              <thead>
+                <tr>
+                  <th>Название</th>
+                  <th>Количество</th>
+                  <th>Цена</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for cart_item in cart.items.all %}
+                <tr>
+                  <td>{{ cart_item.item.title|truncatechars:20 }}</td>
+                  <td>{{ cart_item.quantity }}</td>
+                  <td>{{ cart_item.total_price }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2"></td>
+                  <td><b>{{ cart.total_price }}</b></td>
+                </tr>
+              </tfoot>
+            </table>
           </div>
+        {% else %}
+          Корзина пустая
+          <a href="{% url 'store:home' %}" class="button" style="display: block; text-align: center; margin-top: 20px;">Вернуться на главную</a>
         {% endif %}
-      {% endfor %}
-    </div>
-    <div class="col-md-4" style="width: 40%;">
-      <h2>Ваш заказ</h2>
-      {% if cart.items.exists %}
-        <div class="table-wrapper">
-          <table class="alt">
-            <thead>
-              <tr>
-                <th>Название</th>
-                <th>Количество</th>
-                <th>Цена</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for cart_item in cart.items.all %}
-              <tr>
-                <td>{{ cart_item.item.title|truncatechars:20 }}</td>
-                <td>
-                    {{ cart_item.quantity }}
-                </td>
-                <td>{{ cart_item.total_price }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="2"></td>
-                <td><b>{{ cart.total_price }}</b></td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      {% else %}
-        Корзина пустая
-        <a href="{% url 'store:home' %}"  style="margin-bottom: 100px; margin-top: 50px;" class="button">Вернуться на главную</a>
-      {% endif %}
-      <div><h2>Выберите способ оплаты</h2></div>
-      {{ form.payment_method }}
-      <!-- Всплывающее окно для опции "Картой онлайн" -->
-      {% include 'checkout/popup.html' %}
+      </div>
+
+      <!-- Способ оплаты -->
+      <div class="col-md-8" style="width: 100%; max-width: 600px;">
+        <h2>Выберите способ оплаты</h2>
+        {{ form.payment_method }}
+        {% include 'checkout/popup.html' %}
+      </div>
+      
     </div>
   </section>
-    <div class="actions" style="text-align: justify; margin-top: 100px;">
-      <input type="reset" value="Сбросить" style="float: left;">
-      {% if cart.items.exists %}
-        <input type="submit" value="Оставить заказ" class="primary" style="float: right;">
-      {% else %}
-        <input type="submit" value="Оставить заказ" class="primary disabled" style="float: right;">
-      {% endif %}
-    </div>
+
+  <!-- Кнопки -->
+  <div class="actions" style="display: flex; flex-direction: column; align-items: center; margin-top: 40px; gap: 10px;">
+    <input type="reset" value="Сбросить" class="button" style="width: 100%; max-width: 300px;">
+    {% if cart.items.exists %}
+      <input type="submit" value="Оставить заказ" class="primary button" style="width: 100%; max-width: 300px;">
+    {% else %}
+      <input type="submit" value="Оставить заказ" class="primary disabled button" style="width: 100%; max-width: 300px;">
+    {% endif %}
   </div>
 </form>
 {% endblock %}

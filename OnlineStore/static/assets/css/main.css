@@ -37,6 +37,14 @@ ol, ul {
 	list-style: none;
 }
 
+.header-hidden {
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+
+
+
 blockquote, q {
 	quotes: none;
 }

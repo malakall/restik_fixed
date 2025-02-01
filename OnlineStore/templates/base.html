@@ -4,7 +4,7 @@
 <html>
 	
 	<head>
-		<title>ресторан мамы беллы</title>
+		<title>ресторан Шашлычный дом</title>
 		<meta charset="utf-8" />
 		<link rel="icon" href="{% static "images/GG.png" %}" >
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -41,6 +41,27 @@
 			<script src={% static "assets/js/main.js"%}></script>
 			{% block js %}
 			{% endblock %}
+
+
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+					const header = document.getElementById("header");
+				
+					window.addEventListener("scroll", function () {
+						let scrollTop = window.scrollY || document.documentElement.scrollTop;
+						
+						if (scrollTop > 0) {
+							// Если скролл вниз или вверх, скрываем header
+							header.classList.add("header-hidden");
+						} else {
+							// Если вернулись в самый верх, показываем header
+							header.classList.remove("header-hidden");
+						}
+					});
+				});
+				</script>
+				
+				
 	</body>
 
 	

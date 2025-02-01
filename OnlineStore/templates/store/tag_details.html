@@ -2,29 +2,42 @@
 
 {% block content %}
 {% load static %}
-    <h2>{{ tag.name }}</h2>
-    Количество товаров:&ensp;{{ tag.items.count }}
-    <p><a href="{% url 'store:tag_list'%}"><b>Все категории</b></a></p>
-    <hr>
+
+<h2>{{ tag.name }}</h2>
+<p>Количество товаров:&ensp;{{ tag.items.count }}</p>
+<p><a href="{% url 'store:tag_list' %}"><b>Все категории</b></a></p>
+<hr>
+
 {% for item in page_obj %}
+    <!-- Название товара -->
     <a href="{% url 'store:item_details' item.slug %}"><b>{{ item.title }}</b></a>
-    <p><span class="image left">
-        {% if item.image %}
-            <img src="{{ item.image.url }}" alt="" style="max-width: 200px; max-height: 200px;"/>
-        {% else %}
-            <img src="{% static "images/pic01.jpg" %}" alt="" />
-        {% endif %}
-        <a href="{% url 'cart:add_to_cart' item.slug %}" class="button small" style="margin-top:10px;">
-            Добавить в корзину</a>
-        </span>
-    </p>
-    <p>{{ item.description }}</p>
-    {% if item.old_price %}
-        <p>Старая цена: <s>{{ item.old_price }} рублей</s>
-        Новая цена: <b>{{ item.price }}</b> рублей </p>
+
+    <!-- Изображение -->
+    {% if item.image %}
+        <p><img src="{{ item.image.url }}" alt="" style="max-width: 200px; max-height: 200px;"/></p>
     {% else %}
-        <p>Цена: <b>{{ item.price }}</b> рублей </p>
+        <p><img src="{% static "images/pic01.jpg" %}" alt="" /></p>
     {% endif %}
+
+    <!-- Описание товара -->
+    <p>{{ item.description }}</p>
+
+    <!-- Цена -->
+    {% if item.old_price %}
+        <p>Старая цена: <s>{{ item.old_price }} рублей</s></p>
+        <p>Новая цена: <b>{{ item.price }}</b> рублей</p>
+    {% else %}
+        <p>Цена: <b>{{ item.price }}</b> рублей</p>
+    {% endif %}
+
+    <!-- Кнопка добавления в корзину -->
+    <p>
+        <a href="{% url 'cart:add_to_cart' item.slug %}" class="button small">
+            Добавить в корзину
+        </a>
+    </p>
+
     {% if not forloop.last %}<hr>{% endif %}
 {% endfor %}
-{% endblock %} 
+
+{% endblock %}
