@@ -2,6 +2,7 @@
 
 {% load static %}
 <html>
+	
 	<head>
 		<title>ресторан мамы беллы</title>
 		<meta charset="utf-8" />
@@ -10,12 +11,13 @@
 		<link rel="stylesheet" href="{% static "assets/css/main.css"%}" />	
 		<noscript><link rel="stylesheet" href="{% static "assets/css/noscript.css"%}" /></noscript>
 		{% block css %}
+		
 		{% endblock %}
-
-	</head>
+			
+	</head> 
 	<body class="is-preload">
 		<!-- Wrapper -->
-			<div id="wrapper">
+			<div id="wrapper">	
 				<!-- Header -->
                     {% include 'includes/header.html' %} 
 				<!-- Main -->
@@ -40,4 +42,6 @@
 			{% block js %}
 			{% endblock %}
 	</body>
+
+	
 </html>
