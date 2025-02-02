@@ -26,17 +26,18 @@
       <div class="col-md-8" style="width: 100%; max-width: 600px;">
         <h2>Доставка</h2>
         {% for field in form %}
-          {% if field.name != 'payment_method' %}
-            <div class="form-group">
-              {{ field }}
-              <div class="text-danger error-message">
-                {% for error in field.errors %}
-                  <span>{{ error }}</span>
-                {% endfor %}
-              </div>
+        {% if field.name not in 'payment_method email' %}  
+          <div class="form-group">
+            {{ field }}
+            <div class="text-danger error-message">
+              {% for error in field.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
             </div>
-          {% endif %}
-        {% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      
       </div>
 
       <!-- Ваш заказ -->

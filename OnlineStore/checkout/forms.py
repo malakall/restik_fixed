@@ -14,13 +14,18 @@ class PlaceholderForm(forms.Form):
 class OrderCreateForm(PlaceholderForm):
     first_name = forms.CharField(max_length=100, help_text='Имя')
     last_name = forms.CharField(max_length=100, help_text='Фамилия')
-    email = forms.EmailField(help_text='Email')
     
-    # Добавим регулярное выражение для валидации телефона
+    # Поле email удалено
+    
     phone = forms.CharField(
-        max_length=20, 
-        help_text='Телефон', 
-        validators=[RegexValidator(regex=r'^[\+\d\s]+$', message='Телефон должен содержать только цифры, пробелы и символ "+"')]
+        max_length=20,
+        help_text='Телефон',
+        validators=[
+            RegexValidator(
+                regex=r'^[\+\d\s]+$',
+                message='Телефон должен содержать только цифры, пробелы и символ "+"'
+            )
+        ]
     )
     
     address_line_1 = forms.CharField(max_length=100, help_text='Адрес')

@@ -32,9 +32,10 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 
 class ShippingAddressAdmin(admin.ModelAdmin):
-    list_display = ('id', 'first_name', 'last_name', 'email',
-                    'phone', 'address_line_1', 'address_line_2',)
-    search_fields = ('first_name', 'last_name', 'email',)
+    list_display = ('id', 'first_name', 'last_name',  
+                    'phone', 'address_line_1', 'address_line_2',)  
+    search_fields = ('first_name', 'last_name',)  
+
 
 
 admin.site.register(Order, OrderAdmin)

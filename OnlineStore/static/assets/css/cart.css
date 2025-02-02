@@ -55,3 +55,27 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
+
+
+.cart-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;  /* Отступ между кнопками */
+    width: 100%;
+    max-width: 300px;  /* Максимальная ширина кнопок */
+    margin: 0 auto;  /* Центрируем кнопки */
+  }
+  
+  .cart-button {
+    width: 100%;  /* Делаем кнопки одинакового размера */
+    max-width: 300px;  /* Ограничиваем максимальную ширину кнопок */
+    text-align: center;  /* Центрируем текст в кнопке */
+    padding: 10px 0;  /* Увеличиваем высоту кнопки */
+    font-size: 16px;  /* Размер шрифта */
+  }
+  
+  .cart-button:hover {
+    background-color: #f2849e; /* Цвет фона при наведении */
+    color: white; /* Цвет текста при наведении */
+  }
+  

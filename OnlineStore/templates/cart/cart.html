@@ -52,10 +52,12 @@
       </table>
     </div>
   </section>
-  <div style="text-align: justify;">
-    <a href="{% url 'store:home' %}" style="float: left;" class="button">Продолжить покупки</a>
-    <a href="{% url 'checkout:checkout' %}" style="float: right;" class="button">Оформить заказ</a>
+
+  <div class="cart-buttons-container" style="text-align: justify;">
+    <a href="{% url 'store:home' %}" class="button cart-button">Продолжить покупки</a>
+    <a href="{% url 'checkout:checkout' %}" class="button cart-button">Оформить заказ</a>
   </div>
+
 {% else %}
   <p>Ваша корзина пуста.</p>
 {% endif %}
